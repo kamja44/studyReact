@@ -1,31 +1,25 @@
 import Button from "./Button";
 import {useState, useEffect} from "react";
 
+function Hello(){
+  
+  useEffect(()=>{
+    console.log("hi");
+    return () => console.log("bye"); // component가 제거될 때(삭제될 때) 실행되는 문장 <- cleanup function
+  }, [])
+  return (
+    <h1>Hi</h1>
+  );
+}
+
 function App() {
-  const [counter, setValue] = useState(0);
-  const [keyword, setKeyword] = useState("");
-  const onClick = () => setValue((current) => current + 1);
-  const onChange = (event) => setKeyword(event.target.value);
-  // useEffect의 첫 번째 argument는 단 한번만 실행된다.
-  useEffect(() => console.log("Only Once"), []); 
-  useEffect(() => {
-    console.log("keyword Changed");
-  }, [keyword]); // [keyword]가 변경될 때 코드를 실행한다.
-  useEffect(()=>{
-    console.log("Counter changed");
-  }, [counter]);
-  useEffect(()=>{
-    console.log("keyword & counter changed");
-  }, [keyword, counter]);
+  const [showing, setShowing] = useState(false);
+  const onClick = () => setShowing((current) => !current);
   return (
     <div>
-      <input 
-      value={keyword} 
-      onChange={onChange} 
-      type="text" 
-      placeholder="Search here..."  />
-      <h1>{counter}</h1>
-      <Button text={"Click me"} onClick={onClick} />
+      {/* JSX에서 JS 사용 시 중괄호 안에 JS사용 */}
+      {showing ? <Hello /> : null}
+      <button onClick={onClick} >{showing ? "Hide" : "Show"}</button>
     </div>
   );
 }
