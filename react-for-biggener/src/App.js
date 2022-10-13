@@ -17,7 +17,7 @@ function App() {
   },[])
   return (
     <div>
-      <h1>The Coins! ({coins.length}) </h1>
+      <h1>The Coins! {loading ? "" : `(${coins.length})`} </h1>
       {loading ? <strong>Loading...</strong> : null }
       {loading ? null : <h3>
         I Have 
@@ -29,7 +29,7 @@ function App() {
       </h3>}
       <select>
         {coins.map((coin) => (
-          <option>
+          <option key={coin.id}>
             {coin.name} ({coin.symbol}) : ${coin.quotes.USD.price} USD / You Can Buy {money/coin.quotes.USD.price} Coins!
           </option>
         ))}
