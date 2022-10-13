@@ -19,14 +19,14 @@ function App() {
     <div>
       <h1>The Coins! ({coins.length}) </h1>
       {loading ? <strong>Loading...</strong> : null }
-      <h3>
+      {loading ? null : <h3>
         I Have 
         <input 
           placeholder="input your money"
           onChange={onChange}
           type="number"
           value={money}></input>$
-      </h3>
+      </h3>}
       <select>
         {coins.map((coin) => (
           <option>
