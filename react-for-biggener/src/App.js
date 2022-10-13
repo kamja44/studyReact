@@ -1,25 +1,38 @@
 import Button from "./Button";
 import {useState, useEffect} from "react";
 
-function Hello(){
-  
-  useEffect(()=>{
-    console.log("hi");
-    return () => console.log("bye"); // component가 제거될 때(삭제될 때) 실행되는 문장 <- cleanup function
-  }, [])
-  return (
-    <h1>Hi</h1>
-  );
-}
-
 function App() {
-  const [showing, setShowing] = useState(false);
-  const onClick = () => setShowing((current) => !current);
+  const [toDo, setToDo] = useState("");
+  const [toDos, setToDos] = useState([]);
+  const onChange = (event) => setToDo(event.target.value);
+  const onClick = (index) => {
+    setToDos(toDos.filter((item, toDoIndex) => index !== toDoIndex));
+  };
+  const onSubmit = (event) => {
+    event.preventDefault();
+    if(toDo === ""){
+      return;
+    }
+    setToDos((currentArray) => [toDo,...currentArray]); // ...currentArray <- currentArray 배열의 요소를 꺼낸다.
+    setToDo("");
+  };
   return (
     <div>
-      {/* JSX에서 JS 사용 시 중괄호 안에 JS사용 */}
-      {showing ? <Hello /> : null}
-      <button onClick={onClick} >{showing ? "Hide" : "Show"}</button>
+      <h1>To Do List ({toDos.length})</h1>
+      <form onSubmit={onSubmit}>
+        <input 
+          onChange={onChange} 
+          value={toDo} 
+          type="text" 
+          placeholder="Write your to do..." 
+        />
+        <button>Add To Do</button>
+      </form>
+      <hr />
+      <ul>
+        {toDos.map((item, index) => <li key={index}>{item}  <button onClick={() => onClick(index)}>❌</button></li>)}
+      </ul>
+      {/* map() <- 하나의 array에 있는 item(요소)을 지정한 요소로 바꿔준 후 새로운 array로 반환한다. */}
     </div>
   );
 }
