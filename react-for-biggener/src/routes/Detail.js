@@ -26,7 +26,9 @@ function Detail(){
                 backImg={movie.medium_cover_image}
                 rating={movie.rating}
                 runtime={movie.runtime}
-                genres={movie.geners}
+                genres={movie.genres}
+                description={movie.description_full}
+                download={movie.download_count}
             />}
         </div>
     );
